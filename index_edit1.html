@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lelang internal KPKNL</title>
+<style>
+:root{
+  --blue:#007bff;
+  --navy:#003366;
+  --muted:#d0d7de;
+  --bg:#ffffff;
+  --card:#f9f9f9;
+  --green:#28a745;
+}
+body{
+  font-family: Arial, Helvetica, sans-serif;
+  margin:0;
+  padding:36px 18px;
+  background:var(--bg);
+  color:var(--navy);
+}
+h1{
+  text-align:center;
+  margin-bottom:28px;
+  color:var(--navy);
+  font-size:28px;
+}
+.katalog-container{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  justify-content:center;
+  max-width:980px;
+  margin:0 auto 12px;
+}
+.katalog-item{
+  width:180px;
+  height:150px;
+  border:1px solid var(--muted);
+  border-radius:12px;
+  background:#fff;
+  text-align:center;
+  padding:18px 10px;
+  cursor:pointer;
+  transition:all .18s ease;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+.katalog-item:hover{
+  transform:translateY(-6px);
+  box-shadow:0 8px 20px rgba(0,0,0,.08);
+  border-color:var(--blue);
+}
+.katalog-item i{font-size:36px;color:var(--blue);margin-bottom:8px;}
+.katalog-item span{font-weight:700;color:var(--navy);font-size:15px;}
+.judul-kategori{text-align:center;color:var(--navy);font-size:20px;font-weight:700;margin-top:26px;display:none;}
+.produk-container{
+  max-width:1000px;
+  margin:18px auto 60px;
+  display:none;
+  gap:20px;
+  justify-content:center;
+  flex-wrap:wrap;
+  animation:fadeIn .25s ease;
+}
+.produk-item{
+  width:260px;
+  border:1px solid var(--muted);
+  border-radius:10px;
+  background:var(--card);
+  padding:12px;
+  text-align:center;
+  transition:transform .18s ease, box-shadow .18s ease;
+}
+.produk-item:hover{transform:translateY(-6px);box-shadow:0 8px 20px rgba(0,0,0,.08);}
+.produk-item img{width:100%;height:150px;object-fit:cover;border-radius:8px;margin-bottom:8px;}
+.produk-item .nama{display:block;font-weight:700;color:var(--blue);margin-bottom:6px;font-size:15px;}
+.produk-item .desc{font-size:14px;color:#333;margin-bottom:6px;}
+.produk-item .harga{color:var(--navy);font-weight:700;margin-bottom:8px;}
+.btn-green{display:inline-block;padding:8px 12px;background:var(--green);color:#fff;text-decoration:none;border-radius:8px;font-size:14px;border:none;cursor:pointer;}
+.btn-green:hover{background:#218838;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+</style>
+</head>
+<body>
+
+<h1>Lelang internal KPKNL</h1>
+<div class="katalog-container" id="katalogList"></div>
+<div id="judul" class="judul-kategori"></div>
+<div id="produkArea" class="produk-container"></div>
+
+<script>
+const catalog = [
+  { id:'logam', label:'Logam Mulia Antam', icon:'💰' },
+  { id:'mobil', label:'Mobil', icon:'🚗' },
+  { id:'tas', label:'Tas Branded', icon:'👜' },
+  { id:'jam', label:'Jam Tangan', icon:'⌚' }
+];
+
+const products = {
+      logam: [
+    { name:'Logam Mulia Antam 1000 Gram', desc:'Emas batangan Antam 1000 gram', price:'Rp 1.700.000.000', img:'images/gold1000.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 500 Gram', desc:'Emas batangan Antam 500 gram', price:'Rp 850.000.000', img:'images/gold500.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 250 Gram', desc:'Emas batangan Antam 250 gram', price:'Rp 425.000.000', img:'images/gold250.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 100 Gram', desc:'Emas batangan Antam 100 gram', price:'Rp 170.000.000', img:'images/gold100.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 50 Gram', desc:'Emas batangan Antam 50 gram', price:'Rp 85.000.000', img:'images/gold50.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 25 Gram', desc:'Emas batangan Antam 25 gram', price:'Rp 42.500.000', img:'images/gold25.png', wa:'0817581254' },
+    { name:'Logam Mulia Antam 10 Gram', desc:'Emas batangan Antam 10 gram', price:'Rp 17.000.000', img:'images/gold10.png', wa:'0817581254' }
+  ],
+  mobil: [
+    { name:'Toyota Land Cruiser 2025 3.3 GR-S', desc:'Automatic', price:'Rp1.500.000.000', img:'landcruiser.png', wa:'0817581254' },
+    { name:'Toyota Voxy 2025 2.0 Van Wagon', desc:'Automatic', price:'Rp320.000.000', img:'voxi.png.jpg', wa:'0817581254' },
+    { name:'Kijang Innova Zenit 2025 2.0 Q HV CVT TSS', desc:'Automatic', price:'Rp370.000.000', img:'kijanginnovazenit.png.jpg', wa:'0817581254' },
+    { name:'Honda Accord 2025 1.5 Sedan', desc:'Automatic', price:'Rp430.000.000', img:'hondaaccore.png.jpg', wa:'0817581254' },
+    { name:'Honda BR-V 2025 1.5 Prestige SUV', desc:'Automatic', price:'Rp192.000.000', img:'hondabrv.png.jpg', wa:'0817581254' },
+    { name:'Honda Civic 2025 1.5 RS Sedan', desc:'Automatic', price:'Rp360.000.000', img:'hondacivic.png.jpg', wa:'0817581254' },
+    { name:'Mercedes-Benz A35 2025 AMG 2.0', desc:'Automatic', price:'Rp550.000.000', img:'mercedesa35.png.jpg', wa:'0817581254' },
+    { name:'Mercedes-Benz A45 2025 AMG 2.054 4MATIC+ Hatchback', desc:'Automatic', price:'Rp750.000.000', img:'https://via.placeholder.com/600x400?text=Mercedes+A45+2025', wa:'0817581254' }
+  ],
+    tas: [
+    { name:'Hermès Lindy 26 Beige Marfa Taurillon Clemence Phw B', desc:'Hermès', price:'Rp 106.000.000', img:'https://via.placeholder.com/600x400?text=Hermes+Lindy+26', wa:'0817581254' },
+    { name:'Hermès Birkin 25 Mauve Sylvestre Swift Ghw', desc:'Hermès', price:'Rp 220.000.000', img:'https://via.placeholder.com/600x400?text=Hermes+Birkin+25', wa:'0817581254' },
+    { name:'Hermès Kelly 25 Vert Biscuit / Blanc Madame Ghw K', desc:'Hermès', price:'Rp 217.000.000', img:'https://via.placeholder.com/600x400?text=Hermes+Kelly+25', wa:'0817581254' },
+    { name:'LOUIS VUITTON LOnTheGo Organizer M15136', desc:'Louis Vuitton', price:'Rp 43.500.000', img:'https://via.placeholder.com/600x400?text=LV+OnTheGo+Organizer', wa:'0817581254' },
+    { name:'LOUIS VUITTON Customizable Side Trunk MM Mon Monogram P01899', desc:'Louis Vuitton', price:'Rp 41.700.000', img:'https://via.placeholder.com/600x400?text=LV+Side+Trunk+MM', wa:'0817581254' },
+    { name:'LOUIS VUITTON Vanity Chain Pouch M27049', desc:'Louis Vuitton', price:'Rp 35.000.000', img:'https://via.placeholder.com/600x400?text=LV+Vanity+Chain+Pouch', wa:'0817581254' }
+  ],
+  jam: []
+};
+
+const katalogList = document.getElementById('katalogList');
+catalog.forEach(cat => {
+  const el = document.createElement('div');
+  el.className = 'katalog-item';
+  el.setAttribute('data-id', cat.id);
+  el.innerHTML = `<i>${cat.icon}</i><span>${cat.label}</span>`;
+  el.addEventListener('click', ()=> toggleProduk(cat.id));
+  katalogList.appendChild(el);
+});
+
+const produkArea = document.getElementById('produkArea');
+Object.keys(products).forEach(key => {
+  const cont = document.createElement('div');
+  cont.id = 'produk-' + key;
+  cont.className = 'produk-container';
+  produkArea.parentNode.insertBefore(cont, produkArea);
+  products[key].forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'produk-item';
+    item.innerHTML = `
+      <img src="${p.img}" alt="${p.name}">
+      <div class="nama">${p.name}</div>
+      <div class="desc">${p.desc}</div>
+      <div class="harga">${p.price}</div>
+      <a href="https://wa.me/${p.wa}?text=Halo,%20saya%20tertarik%20dengan%20${encodeURIComponent(p.name)}" class="btn-green" target="_blank">Beli Sekarang</a>`;
+    cont.appendChild(item);
+  });
+});
+
+function toggleProduk(id){
+  document.querySelectorAll('.produk-container').forEach(a=> a.style.display = 'none');
+  document.getElementById('judul').style.display = 'none';
+  const selected = document.getElementById('produk-' + id);
+  if(!selected) return;
+  const isOpen = selected.style.display === 'flex';
+  if(isOpen){ selected.style.display = 'none'; return; }
+  selected.style.display = 'flex';
+  const label = catalog.find(c=>c.id===id)?.label || id;
+  const judul = document.getElementById('judul');
+  judul.innerText = 'Produk ' + label;
+  judul.style.display = 'block';
+}
+</script>
+</body>
+</html>
